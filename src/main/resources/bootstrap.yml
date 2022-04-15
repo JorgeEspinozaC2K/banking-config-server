@@ -16,7 +16,7 @@ spring:
           password: ${GIT_PASSWORD}     
   security:
     user:
-      name: nttbootcamp
-      password: Ntt_d4t4
+      name: ${security_name}
+      password: ${security_password}
   application:
     name: banking-config-server
