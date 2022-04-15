@@ -1,0 +1,22 @@
+server:
+  port: 8090
+  
+spring:
+  profiles:
+    active:
+    - native
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/JorgeEspinozaC2K/banking-config-data.git
+          search-paths: /
+          default-label: "main"
+          username: ${GIT_USER}
+          password: ${GIT_PASSWORD}     
+  security:
+    user:
+      name: nttbootcamp
+      password: Ntt_d4t4
+  application:
+    name: banking-config-server
