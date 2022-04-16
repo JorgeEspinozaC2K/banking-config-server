@@ -2,21 +2,16 @@ server:
   port: 8090
   
 spring:
-  profiles:
-    active:
-    - native
   cloud:
     config:
       server:
         git:
           uri: https://github.com/JorgeEspinozaC2K/banking-config-data.git
           search-paths: /
-          default-label: "main"
+          default-label: "master"
           username: ${GIT_USER}
           password: ${GIT_PASSWORD}     
   security:
     user:
       name: ${security_name}
       password: ${security_password}
-  application:
-    name: banking-config-server
