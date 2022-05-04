@@ -9,8 +9,6 @@ spring:
           uri: https://github.com/JorgeEspinozaC2K/banking-config-data.git
           search-paths: /
           default-label: "master"
-          username: ${GIT_USER}
-          password: ${GIT_PASSWORD}     
   security:
     user:
       name: ${security_name}
