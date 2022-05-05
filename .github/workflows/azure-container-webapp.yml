@@ -40,19 +40,19 @@ jobs:
           tags: cntrbanking.azurecr.io/${{env.SECRET_AZ_USER}}/${{env.AZURE_APP_CONTAINER}}:${{ github.sha }}
           file: ./Dockerfile
 
-    deploy:
-      runs-on: ubuntu-latest
-      needs: build
-      environment:
-        name: 'Development'
-        url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Development'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-      steps:
-        - name: Deploy to Azure Web App
-          id: deploy-to-webapp
-          uses: azure/webapps-deploy@v2
-          with:
-            app-name: 'banking-config-server'
-            slot-name: 'Development'
-            publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-            images: 'cntrbanking.azurecr.io/${{env.SECRET_AZ_USER}}/${{env.AZURE_APP_CONTAINER}}:${{ github.sha }}'
+    steps:
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'banking-config-server'
+          slot-name: 'Development'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: 'cntrbanking.azurecr.io/${{env.SECRET_AZ_USER}}/${{env.AZURE_APP_CONTAINER}}:${{ github.sha }}'
