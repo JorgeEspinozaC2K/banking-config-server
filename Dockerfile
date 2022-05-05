@@ -1,3 +1,3 @@
 FROM openjdk:8-jdk-slim
-WORKDIR /target
-ENTRYPOINT ["java","-jar","config-server.jar"]
+COPY target/*.jar app.jar
+ENTRYPOINT ["java","-jar","app.jar"]
