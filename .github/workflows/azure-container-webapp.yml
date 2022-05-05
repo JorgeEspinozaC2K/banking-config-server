@@ -26,8 +26,8 @@ jobs:
           password: ${{ secrets.AzureAppService_ContainerPassword_161fd72f70a64cfcb5071181e9d27618 }}
         with:
           registry: https://cntrbanking.azurecr.io/
-          username: ${{ env.username }}
-          password: ${{ env.password }}
+          username: ${{ env:username }}
+          password: ${{ env:password }}
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
