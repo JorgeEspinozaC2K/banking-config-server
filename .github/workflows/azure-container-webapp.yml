@@ -22,7 +22,7 @@ jobs:
       - name: Log in with Azure
         uses: azure/login@v1
         with:
-          login-server: cntrbanking.azurecr.io
+          registry: https://cntrbanking.azurecr.io
           username: ${{ secrets.AZURE_CREDENTIAL_USER }}
           password: ${{ secrets.AZURE_CREDENTIAL_PASSWORD }}
 
