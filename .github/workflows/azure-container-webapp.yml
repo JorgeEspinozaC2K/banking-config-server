@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'production'
+      name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
       
     steps:
@@ -71,7 +71,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'banking-config-server'
-          slot-name: 'production'
+          app-name: banking-config-server
+          slot-name: 'Development'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           images: cntrbanking.azurecr.io/${{ secrets.REGISTRY_USERNAME }}/banking-config-container:${{ github.sha }}
