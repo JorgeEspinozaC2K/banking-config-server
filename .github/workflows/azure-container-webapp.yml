@@ -49,7 +49,7 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-          docker build -t cntrbanking.azurecr.io/banking-config-container:${{ github.sha }} .
+          docker build -t cntrbanking.azurecr.io/${{ secrets.REGISTRY_USERNAME }}/banking-config-container:${{ github.sha }} .
           
       - uses: azure/docker-login@v1
         with:
@@ -57,7 +57,7 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-          docker push cntrbanking.azurecr.io/banking-config-container:${{ github.sha }}
+          docker push cntrbanking.azurecr.io/${{ secrets.REGISTRY_USERNAME }}/banking-config-container:${{ github.sha }}
           
 #      - uses: azure/webapps-deploy@v2
 #        with:
@@ -74,4 +74,4 @@ jobs:
           app-name: 'banking-config-server'
           slot-name: 'Development'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: cntrbanking.azurecr.io/banking-config-container:${{ github.sha }}
+          images: cntrbanking.azurecr.io/${{ secrets.REGISTRY_USERNAME }}/banking-config-container:${{ github.sha }}
