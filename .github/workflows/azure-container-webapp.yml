@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    steps:
+    steps:     
       - uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
@@ -27,10 +27,13 @@ jobs:
 
       - name: Log in to container registry
         uses: docker/login-action@v1
+        env:
+          SECRET_AZ_USER: ${{ secrets.AZURE_CREDENTIAL_USER }}
+          SECRET_AZ_PASSWORD: ${{ secrets.AZURE_CREDENTIAL_PASSWORD }}
         with:
           registry: https://cntrbanking.azurecr.io/
-          username: ${{secrets.SECRET_AZ_USER}}
-          password: ${{secrets.SECRET_AZ_PASSWORD}}
+          username: $SECRET_AZ_USER
+          password: $SECRET_AZ_PASSWORD
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
