@@ -25,6 +25,7 @@ jobs:
           SECRET_AZ_USER: ${{ secrets.AZURE_CREDENTIAL_USER }}
           SECRET_AZ_PASSWORD: ${{ secrets.AZURE_CREDENTIAL_PASSWORD }}
         run: |
+          Import-Module Az.Accounts
           Connect-AzContainerRegistry -Name cntrbanking -UserName $SECRET_AZ_USER -Password $SECRET_AZ_PASSWORD
           
       - name: Build and push container image to registry
