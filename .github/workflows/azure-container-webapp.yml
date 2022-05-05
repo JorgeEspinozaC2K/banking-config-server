@@ -63,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.APP_ARTIFACT_NAME }}
-          path: ${{ env.AZURE_WEBAPP_NAME }}/target/${{ env.APP_ARTIFACT_NAME }}
+          path: /target/${{ env.APP_ARTIFACT_NAME }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
