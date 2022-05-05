@@ -25,7 +25,7 @@ jobs:
           SECRET_AZ_USER: ${{ secrets.AZURE_CREDENTIAL_USER }}
           SECRET_AZ_PASSWORD: ${{ secrets.AZURE_CREDENTIAL_PASSWORD }}
         run: |
-          docker login cntrbanking.azurecr.io -u "$env:SECRET_AZ_USER" -p "$env:SECRET_AZ_PASSWORD"
+          winpty docker login cntrbanking.azurecr.io -u "$env:SECRET_AZ_USER" -p "$env:SECRET_AZ_PASSWORD"
           
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
