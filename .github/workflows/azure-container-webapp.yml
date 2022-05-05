@@ -3,6 +3,9 @@
 
 name: Build and deploy container app to Azure Web App - banking-config-server
 
+env:
+  AZURE_WEBAPP_NAME: banking-config-server  # set this to the name of your Azure Web App
+
 on:
   push:
     branches:
@@ -34,19 +37,19 @@ jobs:
           tags: cntrbanking.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2d0ecce173584bb9b8392ae2e350c44f }}/banking-config-container:${{ github.sha }}
           file: ./Dockerfile
 
-    deploy:
-      runs-on: ubuntu-latest
-      needs: build
-      environment:
-        name: 'production'
-        url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-      steps:
-        - name: Deploy to Azure Web App
-          id: deploy-to-webapp
-          uses: azure/webapps-deploy@v2
-          with:
-            app-name: 'banking-config-server'
-            slot-name: 'production'
-            publish-profile: ${{ secrets.AzureAppService_PublishProfile_2952eeebf40f465bb50dcd447d0a8291 }}
-            images: 'cntrbanking.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2d0ecce173584bb9b8392ae2e350c44f }}/banking-config-container:${{ github.sha }}'
+    steps:
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'banking-config-server'
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_2952eeebf40f465bb50dcd447d0a8291 }}
+          images: 'cntrbanking.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_2d0ecce173584bb9b8392ae2e350c44f }}/banking-config-container:${{ github.sha }}'
