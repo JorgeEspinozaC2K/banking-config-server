@@ -23,8 +23,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: https://cntrbanking.azurecr.io/
-          username: ${{ secrets.AZURE_CREDENTIAL_USER }}
-          password: ${{ secrets.AZURE_CREDENTIAL_PASSWORD }}
+          username: cntrbanking
+          password: WFkOnRXzRKvVnnDYsx+VHUtD5U5bP8pu
               
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
