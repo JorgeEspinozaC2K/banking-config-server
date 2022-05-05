@@ -31,7 +31,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: cntrbanking.azurecr.io/${{ secrets.AZURE_CREDENTIAL_USER }}/banking-config-container:${{ github.sha }}
+          tags: cntrbanking.azurecr.io/${{ secrets.AZURE_CREDENTIAL_USER }}/banking-config-container:lastest
           file: ./Dockerfile
 
   deploy:
@@ -49,4 +49,4 @@ jobs:
           app-name: 'banking-config-server'
           slot-name: 'Development'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: 'cntrbanking.azurecr.io/${{ secrets.AZURE_CREDENTIAL_USER }}/banking-config-container:${{ github.sha }}'
+          images: 'cntrbanking.azurecr.io/${{ secrets.AZURE_CREDENTIAL_USER }}/banking-config-container:lastest'
