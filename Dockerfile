@@ -1,3 +1,3 @@
 FROM openjdk:8-jdk-slim
-WORKDIR /target
+WORKDIR /target/
 ENTRYPOINT ["java","-jar","config-server.jar"]
