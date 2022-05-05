@@ -20,7 +20,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Log in to container registry
-        shell: bash
+        shell: pwsh
         env:
           SECRET_AZ_USER: ${{ secrets.AZURE_CREDENTIAL_USER }}
           SECRET_AZ_PASSWORD: ${{ secrets.AZURE_CREDENTIAL_PASSWORD }}
