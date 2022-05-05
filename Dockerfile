@@ -1,3 +1,3 @@
 FROM openjdk:8-jdk-slim
-COPY --chown=appuser:appuser target/**.jar config-server.jar
+WORKDIR /target
 ENTRYPOINT ["java","-jar","config-server.jar"]
