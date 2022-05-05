@@ -1,8 +1,8 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy container app to Azure Web App - banking-discovery-server
-  
+name: Build and deploy container app to Azure Web App - banking-config-server
+
 on:
   push:
     branches:
@@ -13,47 +13,40 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    steps:     
+    steps:
       - uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Log in with Azure
-        uses: azure/login@v1
+      - name: Log in to container registry
+        uses: docker/login-action@v1
         with:
-          registry: https://cntrbanking.azurecr.io
-          username: ${{ secrets.AZURE_CREDENTIAL_USER }}
-          password: ${{ secrets.AZURE_CREDENTIAL_PASSWORD }}
+          registry: https://cntrbanking.azurecr.io/
+          username: ${{ secrets.AzureAppService_ContainerUsername_83402436388c434c833c2ab19bf5d2c4 }}
+          password: ${{ secrets.AzureAppService_ContainerPassword_161fd72f70a64cfcb5071181e9d27618 }}
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
-        env:
-          SECRET_AZ_USER: ${{ secrets.AZURE_CREDENTIAL_USER }}
-          AZURE_APP_CONTAINER: banking-config-container
         with:
           context: .
           push: true
-          tags: cntrbanking.azurecr.io/'$env:SECRET_AZ_USER'/'$env:AZURE_APP_CONTAINER':${{ github.sha }}
+          tags: cntrbanking.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_83402436388c434c833c2ab19bf5d2c4 }}/banking-config-container:${{ github.sha }}
           file: ./Dockerfile
 
   deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Development'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      runs-on: ubuntu-latest
+      needs: build
+      environment:
+        name: 'production'
+        url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-    steps:
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        env:
-          SECRET_AZ_USER: ${{ secrets.AZURE_CREDENTIAL_USER }}
-          PUBLISH_PROFILE: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          AZURE_APP_CONTAINER: banking-config-container
-        with:
-          app-name: 'banking-config-server'
-          slot-name: 'Development'
-          publish-profile: $env:PUBLISH_PROFILE
-          images: 'cntrbanking.azurecr.io/$env:SECRET_AZ_USER/$env:AZURE_APP_CONTAINER:${{ github.sha }}'
+      steps:
+        - name: Deploy to Azure Web App
+          id: deploy-to-webapp
+          uses: azure/webapps-deploy@v2
+          with:
+            app-name: 'banking-config-server'
+            slot-name: 'production'
+            publish-profile: ${{ secrets.AzureAppService_PublishProfile_aec60aded2dd41629a22a2c14f3ec81e }}
+            images: 'cntrbanking.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_83402436388c434c833c2ab19bf5d2c4 }}/banking-config-container:${{ github.sha }}'
