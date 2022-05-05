@@ -41,6 +41,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
+      - name: 1. Set up JDK 8
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          cache: maven
+          
+      - name: 2. Clear with Maven
+        run: mvn clean
+        
+      - name: 3. Compile with Maven
+        run: mvn compile
+        
+      - name: 4. Build with Maven
+        run: mvn -B package --file pom.xml
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
