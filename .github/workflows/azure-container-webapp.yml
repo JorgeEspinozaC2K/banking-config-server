@@ -6,9 +6,7 @@ name: Build and deploy container app to Azure Web App - banking-discovery-server
 env:
   AZURE_WEBAPP_NAME: banking-config-server  # set this to the name of your Azure Web App
   AZURE_APP_CONTAINER: banking-config-container
-  SECRET_AZ_USER: ${{ secrets.AZURE_CREDENTIAL_USER }}
-  SECRET_AZ_PASSWORD: ${{ secrets.AZURE_CREDENTIAL_PASSWORD }}
-
+  
 on:
   push:
     branches:
@@ -32,15 +30,18 @@ jobs:
           SECRET_AZ_PASSWORD: ${{ secrets.AZURE_CREDENTIAL_PASSWORD }}
         with:
           registry: https://cntrbanking.azurecr.io/
-          username: $SECRET_AZ_USER
-          password: $SECRET_AZ_PASSWORD
+          username: "$SECRET_AZ_USER"
+          password: "$SECRET_AZ_PASSWORD"
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
+        env:
+          SECRET_AZ_USER: ${{ secrets.AZURE_CREDENTIAL_USER }}
+          AZURE_APP_CONTAINER: banking-config-container
         with:
           context: .
           push: true
-          tags: cntrbanking.azurecr.io/${{secrets.SECRET_AZ_USER}}/${{secrets.AZURE_APP_CONTAINER}}:${{ github.sha }}
+          tags: cntrbanking.azurecr.io/'$env:SECRET_AZ_USER'/'$env:AZURE_APP_CONTAINER':${{ github.sha }}
           file: ./Dockerfile
 
   deploy:
