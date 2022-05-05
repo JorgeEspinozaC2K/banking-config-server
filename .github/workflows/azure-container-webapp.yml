@@ -49,6 +49,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
           app-name: 'banking-config-server'
           slot-name: 'production'
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_2952eeebf40f465bb50dcd447d0a8291 }}
