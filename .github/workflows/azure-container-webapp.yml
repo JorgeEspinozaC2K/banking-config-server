@@ -19,7 +19,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Log in to container registry
+      - name: Login to azure
         uses: azure/login@v1
 #        env:
 #          username: ${{ secrets.AzureAppService_ContainerUsername_83402436388c434c833c2ab19bf5d2c4 }}
