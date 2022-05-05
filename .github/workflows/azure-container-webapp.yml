@@ -21,13 +21,14 @@ jobs:
 
       - name: Log in to container registry
         uses: azure/login@v1
-        env:
+#        env:
 #          username: ${{ secrets.AzureAppService_ContainerUsername_83402436388c434c833c2ab19bf5d2c4 }}
 #          password: ${{ secrets.AzureAppService_ContainerPassword_161fd72f70a64cfcb5071181e9d27618 }}
-          creds: ${{ secrets.AZURE_CREDENTIALS}}
+#          creds: ${{ secrets.AZURE_CREDENTIALS }}
         with:
 #          registry: https://cntrbanking.azurecr.io/
-          creds: "$env:cred"
+#          creds: "$env:cred"
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
