@@ -42,14 +42,23 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
       - uses: azure/docker-login@v1
         with:
           login-server: cntrbanking.azurecr.io
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-          `docker build -t cntrbanking.azurecr.io/banking-config-container:${{ github.sha }} .`
-          `docker push cntrbanking.azurecr.io/banking-config-container:${{ github.sha }}`
+          docker build -t cntrbanking.azurecr.io/banking-config-container:${{ github.sha }} .
+          
+      - uses: azure/docker-login@v1
+        with:
+          login-server: cntrbanking.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - run: |
+          docker push cntrbanking.azurecr.io/banking-config-container:${{ github.sha }}
+          
       - uses: azure/webapps-deploy@v2
         with:
           app-name: banking-config-server
