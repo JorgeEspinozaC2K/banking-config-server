@@ -29,15 +29,15 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: https://cntrbanking.azurecr.io/
-          username: ${{env.SECRET_AZ_USER}}
-          password: ${{env.SECRET_AZ_PASSWORD}}
+          username: ${{secrets.SECRET_AZ_USER}}
+          password: ${{secrets.SECRET_AZ_PASSWORD}}
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: cntrbanking.azurecr.io/${{env.SECRET_AZ_USER}}/${{env.AZURE_APP_CONTAINER}}:${{ github.sha }}
+          tags: cntrbanking.azurecr.io/${{secrets.SECRET_AZ_USER}}/${{secrets.AZURE_APP_CONTAINER}}:${{ github.sha }}
           file: ./Dockerfile
 
   deploy:
@@ -55,4 +55,4 @@ jobs:
           app-name: 'banking-config-server'
           slot-name: 'Development'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: 'cntrbanking.azurecr.io/${{env.SECRET_AZ_USER}}/${{env.AZURE_APP_CONTAINER}}:${{ github.sha }}'
+          images: 'cntrbanking.azurecr.io/${{secrets.SECRET_AZ_USER}}/${{env.AZURE_APP_CONTAINER}}:${{ github.sha }}'
