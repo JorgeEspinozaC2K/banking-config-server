@@ -2,10 +2,6 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
 name: Build and deploy container app to Azure Web App - banking-discovery-server
-
-env:
-  AZURE_WEBAPP_NAME: banking-config-server  # set this to the name of your Azure Web App
-  AZURE_APP_CONTAINER: banking-config-container
   
 on:
   push:
